@@ -6,6 +6,14 @@ function initializePlugin(api, component) {
   console.log(component)
   console.log('Finishing...')
   console.log('--------------------')
+  api.onPageChange((url, title) => {
+    console.log('The page changed to: ' + url + ' and title ' + title);
+    if (url == '' || url == '/categories') {
+      component.set('showLandingPage', true)
+    } else {
+      component.set('showLandingPage', false)
+    }
+  });
   component.set('showLandingPage', true);
 }
 
