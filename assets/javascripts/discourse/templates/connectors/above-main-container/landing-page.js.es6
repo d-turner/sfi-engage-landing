@@ -94,9 +94,6 @@ function initializePlugin(api, component) {
       // Do something with the response
       console.log('Working here...')
       return getCategoryCallback(res)
-    }).catch((e) => {
-      console.log('A "Now On" error occurred: ');
-      console.log(e);
     }).then((results) => {
       console.log('Got results from now on...')
       console.log(results)
@@ -115,7 +112,10 @@ function initializePlugin(api, component) {
       //   console.log('Promise error:')
       //   console.log(e);
       // });
-    });;
+    }).catch((e) => {
+      console.log('A "Now On" error occurred: ');
+      console.log(e);
+    });
 
     // Get the Coming up list and update the template 
     // ajax(`/c/${comingUpId}.json${queryEnd}`).then((res) => {
