@@ -1,1 +1,11 @@
-<div>Hello {{event.name}}</div>
+<a class="eventLink" style="display:block" href="{{event.url}}">
+  <div class="eventItemWrapper">
+    <div class="categoryText"><span>{{event.category}}</span></div>
+    <div class="titleText"><span>{{event.title}}</span></div>
+    <div class="speakers"><span>Speakers...</span></div>
+    <div class="timesWrapper">
+      <div class="startTime"><span>{{event.startTime}}</span></div>
+      <div class="endTime"><span>{{event.endTime}}</span></div>
+    </div>
+  </div>
+</a>

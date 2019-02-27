@@ -12,10 +12,11 @@ const comingUpId = 13
 
 function resolveTopic(topicData) {
   const body = topicData.post_stream.posts[0].cooked;
-  let title = ''
+  let title = topicData.fancy_title;
   let startTime = ''
   let endTime = ''
   let urlLink = ''
+  let category = ''
   let speakers = []
   let lines = body.split('<br>')
   lines.forEach((text) => {
@@ -29,6 +30,8 @@ function resolveTopic(topicData) {
       startTime = line.split('==')[1].trim()
     } else if (line.startsWith('End Time==') || line.startsWith('end time==')) {
       endTime = line.split('==')[1].trim()
+    } else if (line.startsWith('Category==') || line.startsWith('category==')) {
+      category = line.split('==')[1].trim()
     } else if (line.startsWith('Speakers==') || line.startsWith('speakers==')) {
       speakers = line.split('==')[1].trim().split(',')
       if (speakers.length === 1 && speakers[0] === '') {
@@ -37,10 +40,12 @@ function resolveTopic(topicData) {
     }
   });
   let result = {}
+  result.title = title;
   result.url = urlLink
   result.startTime = startTime
   result.endTime = endTime
   result.speakers = speakers
+  result.category = category
   return result;
 }
 
@@ -99,8 +104,9 @@ function initializePlugin(api, component) {
       }).then((nowOnTopicData) => {
         console.log('Current "Now On" objects')
         console.log(nowOnTopicData)
-        component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
-        component.set('nextEvents', [{ name: 'Test 1B' }, { name: 'Test 2B' }, { name: 'Test 3B' }]);
+        // component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
+        component.set('liveEvents', nowOnTopicData)
+        component.set('nextEvents', nowOnTopicData);
       }).catch((e) => {
         console.log('A "Now On" error occurred: ');
         console.log(e);
