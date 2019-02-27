@@ -10,7 +10,8 @@
   </div>
 
   <div class="eventsWrapper">
-    <div class="eventListWrapper nowOnWrapper">
+    {{event-list events=liveEvents label="Now On"}}
+    {{!-- <div class="eventListWrapper nowOnWrapper">
       <div class="eventList nowOnList">
         <div class="eventItem nowOnEvent">Event one A</div>
         <div class="eventItem nowOnEvent">Event two B</div>
@@ -22,12 +23,16 @@
         <div class="eventItem comingUpEvent">Event one C</div>
         <div class="eventItem comingUpEvent">Event two D</div>
       </div>
-    </div>
+    </div> --}}
+    {{event-list events=nextEvents label="Coming up"}}
 
     <div class="eventListWrapper otherWrapper">
       <div class="otherItemList">
         <a href="http://google.com" class="scheduleButton">Schedule of Discussions (PDF)</a>
-        <a class="twitter-timeline" href="https://twitter.com/DublinCityUni">Tweets by DublinCityUni</a>
+        <a
+          class="twitter-timeline"
+          href="https://twitter.com/scienceirel"
+          data-height="500">Tweets by Science Foundation Ireland</a>
         <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
     </div>
