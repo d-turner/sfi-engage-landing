@@ -54,12 +54,13 @@ function getCategoryCallback(data) {
     for (let i = 0; i < topics.length; i += 1) {
       if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
         arr.push(topics[i]);
-        const p1 = ajax(`/t/${topics[i].id}.json${queryEnd}`)
-        topicPromiseArr.push(p1);
+        // const p1 = ajax(`/t/${topics[i].id}.json${queryEnd}`)
+        // topicPromiseArr.push(p1);
       }
     }
     console.log('Other Array:')
     console.log(arr)
+    return ['test 1', 'test 2']
     return Promise.all(topicPromiseArr)
   } else {
     return [];
