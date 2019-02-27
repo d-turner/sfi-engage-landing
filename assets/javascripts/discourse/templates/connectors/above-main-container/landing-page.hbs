@@ -10,7 +10,10 @@
   </div>
 
   <div class="eventsWrapper">
-    {{event-list events=liveEvents label="Now On"}}
+    <div class="eventListWrapper">
+      {{event-list events=liveEvents label="Now On"}}
+    </div>
+    
     {{!-- <div class="eventListWrapper nowOnWrapper">
       <div class="eventList nowOnList">
         <div class="eventItem nowOnEvent">Event one A</div>
@@ -24,7 +27,10 @@
         <div class="eventItem comingUpEvent">Event two D</div>
       </div>
     </div> --}}
-    {{event-list events=nextEvents label="Coming up"}}
+    <div class="eventListWrapper">
+      {{event-list events=nextEvents label="Coming up"}}
+    </div>
+    
 
     <div class="eventListWrapper otherWrapper">
       <div class="otherItemList">
