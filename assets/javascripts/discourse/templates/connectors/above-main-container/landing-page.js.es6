@@ -96,7 +96,7 @@ function initializePlugin(api, component) {
         return topicDataArray.forEach(topicData => resolveTopic(topicData))
       }).then((nowOnTopicData) => {
         console.log('Current "Now On" objects')
-        console.log(nowOnTopicDta)
+        console.log(nowOnTopicData)
         component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
         component.set('nextEvents', [{ name: 'Test 1B' }, { name: 'Test 2B' }, { name: 'Test 3B' }]);
       }).catch((e) => {
