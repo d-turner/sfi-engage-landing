@@ -91,7 +91,7 @@ function initializePlugin(api, component) {
       }).then((topicDataArray) => {
         console.log('Got all the topic data...')
         console.log(topicDataArray)
-        return topicDataArray.each(topicData => resolveTopic(topicData))
+        return topicDataArray.forEach(topicData => resolveTopic(topicData))
       }).then((nowOnTopicData) => {
         console.log('Current "Now On" objects')
         console.log(nowOnTopicDta)
