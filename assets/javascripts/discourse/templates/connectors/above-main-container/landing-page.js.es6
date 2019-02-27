@@ -6,8 +6,8 @@ function initializePlugin(api, component) {
   console.log(component)
   console.log('Finishing...')
   component.set('showLandingPage', true)
-  component.set('liveEvents', ['Test 1A', 'Test 2A', 'Test 3A']);
-  component.set('nextEvents', ['Test 1B', 'Test 2B', 'Test 3B']);
+  component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
+  component.set('nextEvents', [{ name: 'Test 1B' }, { name: 'Test 2B' }, { name: 'Test 3B' }]);
   console.log('--------------------')
   
   // Show or hide the landing page based on current url
