@@ -1,5 +1,4 @@
 import { withPluginApi } from "discourse/lib/plugin-api"
-// import {ajax} from 'discourse/lib/ajax'
 
 // Value are unique to each discourse instance
 /***********/
@@ -92,28 +91,32 @@ function initializePlugin(api, component) {
     // Get the Now On list and update the template
     fetch(`/c/${nowOnId}.json${queryEnd}`)
     .then((res) => {
-      // Do something with the response
-      console.log('Working here...')
-      // getCategoryCallback(res)
       return res.json();
-    }).then((results) => {
-      console.log('Got results from now on...')
-      console.log(results)
-      // .then((values) => {
-      //   return values.forEach((value) => {
-      //     let something = resolveTopic(value)
-      //     console.log('Something is here....')
-      //     console.log('something')
-      //     return something;
-      //   });
-      // }).then((finalResults) => {
-      //   console.log('Final Results: ' + finalResults)
-      //   // component.set(componentString, finalResult);
-      //   return finalResult;
-      // }).catch((e) => {
-      //   console.log('Promise error:')
-      //   console.log(e);
-      // });
+    }).then((data) => {
+      // console.log('Got results from now on...')
+      // console.log(results)
+      if (data && data.topic_list) {
+        const topics = result.topic_list.topics;
+        const topicArray = [];
+        const topicPromiseArr = [];
+        // for each topic (metadata) that is open in the topic_list get the actual topic text
+        for (let i = 0; i < topics.length; i += 1) {
+          // if the topic is open and isn't the default 'About the...' topic make a new request
+          if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
+            topicArray.push(topics[i]);
+            const p1 = fetch(`/t/${topics[i].id}.json${queryEnd}`);
+            topicPromiseArr.push(p1);
+          }  
+        }
+        return Promise.all(topicPromiseArr).then((topicResponses) => {
+          return Promise.all(topicResponses.map(singleTopicResponse => singleTopicResponse.json()))
+        })
+      } else {
+        return [];
+      }
+    }).then((topicDataArray) => {
+      console.log('Got all the topic data...')
+      console.log(topicDataArray)
     }).catch((e) => {
       console.log('A "Now On" error occurred: ');
       console.log(e);
