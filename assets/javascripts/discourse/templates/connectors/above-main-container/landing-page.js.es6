@@ -75,7 +75,6 @@ function initializePlugin(api, component) {
   component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
   component.set('nextEvents', [{ name: 'Test 1B' }, { name: 'Test 2B' }, { name: 'Test 3B' }]);
   console.log('--------------------')
-  return;
   
   // Show or hide the landing page based on current url
   api.onPageChange((url, title) => {
@@ -85,7 +84,7 @@ function initializePlugin(api, component) {
     } else {
       component.set('showLandingPage', false)
     }
-    ``
+    
     /*
     * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
     */
