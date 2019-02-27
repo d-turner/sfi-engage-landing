@@ -12,7 +12,9 @@ const comingUpId = 13
 
 function resolveTopic(topicData) {
   const body = topicData.post_stream.posts[0].cooked;
-  let title = startTime = endTime = ''
+  let title = ''
+  let startTime = ''
+  let endTime = ''
   let urlLink = ''
   let speakers = []
   let lines = body.split('<br>')
