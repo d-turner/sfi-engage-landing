@@ -58,13 +58,13 @@ function getCategoryCallback(data) {
         topicPromiseArr.push(p1);
       }
     }
-    console.log('Topic Promise Array:')
-    console.log(topicPromiseArr)
     console.log('Other Array:')
     console.log(arr)
     return Promise.all(topicPromiseArr).then((values) => {
       values.forEach((value) => {
-        return resolveTopic(value);
+        let something = resolveTopic(value);
+        console.log(something);
+        return something;
       });
     }).then((finalResults) => {
       console.log('Final Results: ' + finalResults)
