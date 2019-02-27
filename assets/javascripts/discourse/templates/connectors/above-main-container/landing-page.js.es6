@@ -94,9 +94,9 @@ function initializePlugin(api, component) {
       return res.json();
     }).then((data) => {
       // console.log('Got results from now on...')
-      // console.log(results)
+      // console.log(data)
       if (data && data.topic_list) {
-        const topics = result.topic_list.topics;
+        const topics = data.topic_list.topics;
         const topicArray = [];
         const topicPromiseArr = [];
         // for each topic (metadata) that is open in the topic_list get the actual topic text
