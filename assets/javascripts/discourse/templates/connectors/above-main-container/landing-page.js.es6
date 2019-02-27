@@ -60,21 +60,7 @@ function getCategoryCallback(data) {
     }
     console.log('Other Array:')
     console.log(arr)
-    return Promise.all(topicPromiseArr).then((values) => {
-      return values.forEach((value) => {
-        let something = resolveTopic(value)
-        console.log('Something is here....')
-        console.log('something')
-        return something;
-      });
-    }).then((finalResults) => {
-      console.log('Final Results: ' + finalResults)
-      // component.set(componentString, finalResult);
-      return finalResult;
-    }).catch((e) => {
-      console.log('Promise error:')
-      console.log(e);
-    });
+    return Promise.all(topicPromiseArr)
   }
 }
 
@@ -106,6 +92,21 @@ function initializePlugin(api, component) {
       getCategoryCallback(res).then((results) => {
         console.log('Got results from now on...')
         console.log(results)
+        // .then((values) => {
+        //   return values.forEach((value) => {
+        //     let something = resolveTopic(value)
+        //     console.log('Something is here....')
+        //     console.log('something')
+        //     return something;
+        //   });
+        // }).then((finalResults) => {
+        //   console.log('Final Results: ' + finalResults)
+        //   // component.set(componentString, finalResult);
+        //   return finalResult;
+        // }).catch((e) => {
+        //   console.log('Promise error:')
+        //   console.log(e);
+        // });
       });
     }).catch((e) => {
       console.log('A "Now On" error occurred: ');
