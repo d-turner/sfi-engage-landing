@@ -1,5 +1,5 @@
 import { withPluginApi } from "discourse/lib/plugin-api"
-import {ajax} from 'discourse/lib/ajax'
+// import {ajax} from 'discourse/lib/ajax'
 
 // Value are unique to each discourse instance
 /***********/
@@ -90,11 +90,12 @@ function initializePlugin(api, component) {
     * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
     */
     // Get the Now On list and update the template
-    ajax(`/c/${nowOnId}.json${queryEnd}`)
+    fetch(`/c/${nowOnId}.json${queryEnd}`)
     .then((res) => {
       // Do something with the response
       console.log('Working here...')
-      return getCategoryCallback(res)
+      // getCategoryCallback(res)
+      return res.json();
     }).then((results) => {
       console.log('Got results from now on...')
       console.log(results)
