@@ -1,0 +1,41 @@
+{{#if showLandingPage}}
+<div class="landingMain">
+  <div class="multimedia">
+    <img class="landingMedia" src="https://thumbs.dreamstime.com/z/tv-test-image-card-rainbow-multi-color-bars-geometric-signals-retro-hardware-s-minimal-pop-art-print-suitable-89603635.jpg" alt="Holding image" />
+  </div>
+  <div class="clockMain">
+    <div class="clockWrapper" id="clockdiv">
+      <span class="clockText">Some Time Should be updating here</span>
+    </div>
+  </div>
+
+  <div class="eventsWrapper">
+    {{event-list events=liveEvents label="Now On"}}
+    {{!-- <div class="eventListWrapper nowOnWrapper">
+      <div class="eventList nowOnList">
+        <div class="eventItem nowOnEvent">Event one A</div>
+        <div class="eventItem nowOnEvent">Event two B</div>
+      </div>
+    </div>
+    
+    <div class="eventListWrapper comingUpWrapper">
+      <div class="eventList comingUpList">
+        <div class="eventItem comingUpEvent">Event one C</div>
+        <div class="eventItem comingUpEvent">Event two D</div>
+      </div>
+    </div> --}}
+    {{event-list events=nextEvents label="Coming up"}}
+
+    <div class="eventListWrapper otherWrapper">
+      <div class="otherItemList">
+        <a href="http://google.com" class="scheduleButton">Schedule of Discussions (PDF)</a>
+        <a
+          class="twitter-timeline"
+          href="https://twitter.com/scienceirel"
+          data-height="500">Tweets by Science Foundation Ireland</a>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
