@@ -61,6 +61,8 @@ function getCategoryCallback(data) {
     console.log('Other Array:')
     console.log(arr)
     return Promise.all(topicPromiseArr)
+  } else {
+    return [];
   }
 }
 
@@ -87,30 +89,32 @@ function initializePlugin(api, component) {
     * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
     */
     // Get the Now On list and update the template
-    ajax(`/c/${nowOnId}.json${queryEnd}`).then((res) => {
+    ajax(`/c/${nowOnId}.json${queryEnd}`)
+    .then((res) => {
       // Do something with the response
-      getCategoryCallback(res).then((results) => {
-        console.log('Got results from now on...')
-        console.log(results)
-        // .then((values) => {
-        //   return values.forEach((value) => {
-        //     let something = resolveTopic(value)
-        //     console.log('Something is here....')
-        //     console.log('something')
-        //     return something;
-        //   });
-        // }).then((finalResults) => {
-        //   console.log('Final Results: ' + finalResults)
-        //   // component.set(componentString, finalResult);
-        //   return finalResult;
-        // }).catch((e) => {
-        //   console.log('Promise error:')
-        //   console.log(e);
-        // });
-      });
+      console.log('Working here...')
+      return getCategoryCallback(res)
     }).catch((e) => {
       console.log('A "Now On" error occurred: ');
       console.log(e);
+    }).then((results) => {
+      console.log('Got results from now on...')
+      console.log(results)
+      // .then((values) => {
+      //   return values.forEach((value) => {
+      //     let something = resolveTopic(value)
+      //     console.log('Something is here....')
+      //     console.log('something')
+      //     return something;
+      //   });
+      // }).then((finalResults) => {
+      //   console.log('Final Results: ' + finalResults)
+      //   // component.set(componentString, finalResult);
+      //   return finalResult;
+      // }).catch((e) => {
+      //   console.log('Promise error:')
+      //   console.log(e);
+      // });
     });
 
     // Get the Coming up list and update the template 
