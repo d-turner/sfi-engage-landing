@@ -10,7 +10,9 @@
   </div>
 
   <div class="eventsWrapper">
-    {{event-list events=liveEvents label="Now On"}}
+    {{#if showLandingPage}}
+      {{event-list events=liveEvents label="Now On"}}
+    {{/if}}
     {{!-- <div class="eventListWrapper nowOnWrapper">
       <div class="eventList nowOnList">
         <div class="eventItem nowOnEvent">Event one A</div>
@@ -24,8 +26,9 @@
         <div class="eventItem comingUpEvent">Event two D</div>
       </div>
     </div> --}}
-    {{event-list events=nextEvents label="Coming up"}}
-
+    {{#if showLandingPage}}
+      {{event-list events=nextEvents label="Coming up"}}
+    {{/if}}
     <div class="eventListWrapper otherWrapper">
       <div class="otherItemList">
         <a href="http://google.com" class="scheduleButton">Schedule of Discussions (PDF)</a>
