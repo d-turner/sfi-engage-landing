@@ -118,15 +118,15 @@ function initializePlugin(api, component) {
     });;
 
     // Get the Coming up list and update the template 
-    ajax(`/c/${comingUpId}.json${queryEnd}`).then((res) => {
-      console.log('blaaaa not important')
-      console.log(res)
-      // Do something with the response 
-      // getCategoryCallback(res, component, 'live-topics');
-    }).catch((e) => {
-      console.log('A "Coming Up" error occurred: ');
-      console.log(e);
-    });
+    // ajax(`/c/${comingUpId}.json${queryEnd}`).then((res) => {
+    //   console.log('blaaaa not important')
+    //   console.log(res)
+    //   // Do something with the response 
+    //   // getCategoryCallback(res, component, 'live-topics');
+    // }).catch((e) => {
+    //   console.log('A "Coming Up" error occurred: ');
+    //   console.log(e);
+    // });
   });
   
 }
