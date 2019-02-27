@@ -1,11 +1,11 @@
-import { withPluginApi } from "discourse/lib/plugin-api";
-import {ajax} from 'discourse/lib/ajax';
+import { withPluginApi } from "discourse/lib/plugin-api"
+import {ajax} from 'discourse/lib/ajax'
 
 // Value are unique to each discourse instance
 /***********/
-const apiKey = '172d73af3122e6560fae33626f58130741877acfd1a9c8cfd9041a5ebc69fd9b';
+const apiKey = '172d73af3122e6560fae33626f58130741877acfd1a9c8cfd9041a5ebc69fd9b'
 const username = 'dturner';
-const queryEnd = `?api_key=${apiKey}&api_username=${username}`;
+const queryEnd = `?api_key=${apiKey}&api_username=${username}`
 
 const nowOnId = 12
 const comingUpId =13
@@ -13,48 +13,48 @@ const comingUpId =13
 
 function resolveTopic(res) {
   const body = res.post_stream.posts[0].cooked;
-  let title = startTime = endTime = '';
-  let urlLink = '';
-  let speakers = [];
-  let lines = body.split('<br>');
+  let title = startTime = endTime = ''
+  let urlLink = ''
+  let speakers = []
+  let lines = body.split('<br>')
   lines.forEach((text) => {
-    let line = text;
-    line = line.replace('<p>', '');
-    line = line.replace('</p>', '');
+    let line = text
+    line = line.replace('<p>', '')
+    line = line.replace('</p>', '')
     line = line.trim();
     if (line.startsWith('Actual URL==' || line.startsWith('URL==') || line.startsWith('url=='))) {
       urlLink = line.split('==')[1].trim();
     }
     else if (line.startsWith('Start Time==') || line.startsWith('start time==')) {
-      startTime = line.split('==')[1].trim();
+      startTime = line.split('==')[1].trim()
     }
     else if (line.startsWith('End Time==') || line.startsWith('end time==')) {
-      endTime = line.split('==')[1].trim();
+      endTime = line.split('==')[1].trim()
     }
     else if (line.startsWith('Speakers==') || line.startsWith('speakers==')) {
-      speakers = line.split('==')[1].trim().split(',');
+      speakers = line.split('==')[1].trim().split(',')
       if (speakers.length === 1 && speakers[0] === '') {
-        speakers = [];
+        speakers = []
       }
     }
   });
-  let result = {};
-  result.url = urlLink;
-  result.startTime = startTime;
-  result.endTime = endTime;
-  result.speakers = speakers;
+  let result = {}
+  result.url = urlLink
+  result.startTime = startTime
+  result.endTime = endTime
+  result.speakers = speakers
   return result;
 }
 
 function getCategoryCallback(data) {
   const arr = [];
   if (data && data.topic_list) {
-    const topics = data.topic_list.topics;
-    const topicPromiseArr = [];
+    const topics = data.topic_list.topics
+    const topicPromiseArr = []
     for (let i = 0; i < topics.length; i += 1) {
       if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
         arr.push(topics[i]);
-        const p1 = ajax(`/t/${topics[i].id}.json${queryEnd}`);
+        const p1 = ajax(`/t/${topics[i].id}.json${queryEnd}`)
         topicPromiseArr.push(p1);
       }
     }
@@ -62,8 +62,9 @@ function getCategoryCallback(data) {
     console.log(arr)
     return Promise.all(topicPromiseArr).then((values) => {
       values.forEach((value) => {
-        let something = resolveTopic(value);
-        console.log(something);
+        let something = resolveTopic(value)
+        console.log('Something is here....')
+        console.log('something')
         return something;
       });
     }).then((finalResults) => {
@@ -71,7 +72,7 @@ function getCategoryCallback(data) {
       // component.set(componentString, finalResult);
       return finalResult;
     }).catch((e) => {
-      console.log('Promise error:');
+      console.log('Promise error:')
       console.log(e);
     });
   }
