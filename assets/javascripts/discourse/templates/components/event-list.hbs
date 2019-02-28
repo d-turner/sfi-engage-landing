@@ -2,7 +2,9 @@
   <div class="eventListTitle">
     <span class="listText">{{label}}</span>
   </div>
-  {{#each events as |event| }}
+  <div class="eventsContainer">
+    {{#each events as |event| }}
       {{event-item event=event}}
-  {{/each}}
+    {{/each}}
+  </div>
 </div>
