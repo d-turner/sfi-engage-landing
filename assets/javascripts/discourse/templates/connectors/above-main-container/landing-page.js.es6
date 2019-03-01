@@ -107,6 +107,8 @@ function initializePlugin(api, component) {
   api.onPageChange((url, title) => {
     console.log('The page changed to: ' + url + ' and title ' + title)
     if (url == '/' || url == '/categories') {
+      updateLandingPage(component, nowOnId, 'liveEvents')
+      updateLandingPage(component, comingUpId, 'nextEvents')
       component.set('showLandingPage', true)
     } else {
       component.set('showLandingPage', false)
@@ -157,8 +159,6 @@ function initializePlugin(api, component) {
     //     console.log('A "Now On" error occurred: ');
     //     console.log(e);
     //   });
-    updateLandingPage(component, nowOnId, 'liveEvents')
-    updateLandingPage(component, comingUpId, 'nextEvents')
     // Get the Coming up list and update the template 
     // ajax(`/c/${comingUpId}.json${queryEnd}`).then((res) => {
     //   console.log('blaaaa not important')
