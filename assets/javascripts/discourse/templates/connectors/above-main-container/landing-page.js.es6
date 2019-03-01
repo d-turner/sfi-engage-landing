@@ -49,6 +49,52 @@ function resolveTopic(topicData) {
   return result;
 }
 
+function updateLandingPage(component, eventId, eventLabel) {
+  /*
+    * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
+    */
+  // Get the Now On list and update the template
+  fetch(`/c/${eventId}.json${queryEnd}`)
+  .then((res) => {
+    return res.json();
+  }).then((data) => {
+    // console.log('Got results from now on...')
+    // console.log(data)
+    if (data && data.topic_list) {
+      const topics = data.topic_list.topics;
+      const topicArray = [];
+      const topicPromiseArr = [];
+      // for each topic (metadata) that is open in the topic_list get the actual topic text
+      for (let i = 0; i < topics.length; i += 1) {
+        // if the topic is open and isn't the default 'About the...' topic make a new request
+        if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
+          topicArray.push(topics[i]);
+          const p1 = fetch(`/t/${topics[i].id}.json${queryEnd}`);
+          topicPromiseArr.push(p1);
+        }
+      }
+      return Promise.all(topicPromiseArr).then((topicResponses) => {
+        return Promise.all(topicResponses.map(singleTopicResponse => singleTopicResponse.json()))
+      })
+    } else {
+      return [];
+    }
+  }).then((topicDataArray) => {
+    console.log(`Got all the topic data for ${eventId}...`)
+    console.log(topicDataArray)
+    // return topicDataArray.forEach(topicData => resolveTopic(topicData))
+    const resultsData = topicDataArray.map(topicData => resolveTopic(topicData))
+    return resultsData;
+  }).then((finalTopicData) => {
+    console.log(`Current ${eventId} objects`)
+    console.log(finalTopicData)
+    component.set(eventLabel, finalTopicData)
+  }).catch((e) => {
+    console.log('A "updateLandingPage()" error occurred: ');
+    console.log(e);
+  });
+}
+
 function initializePlugin(api, component) {
   console.log('Initializing...')
   console.log(api)
@@ -70,48 +116,49 @@ function initializePlugin(api, component) {
      * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
      */
     // Get the Now On list and update the template
-    fetch(`/c/${nowOnId}.json${queryEnd}`)
-      .then((res) => {
-        return res.json();
-      }).then((data) => {
-        // console.log('Got results from now on...')
-        // console.log(data)
-        if (data && data.topic_list) {
-          const topics = data.topic_list.topics;
-          const topicArray = [];
-          const topicPromiseArr = [];
-          // for each topic (metadata) that is open in the topic_list get the actual topic text
-          for (let i = 0; i < topics.length; i += 1) {
-            // if the topic is open and isn't the default 'About the...' topic make a new request
-            if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
-              topicArray.push(topics[i]);
-              const p1 = fetch(`/t/${topics[i].id}.json${queryEnd}`);
-              topicPromiseArr.push(p1);
-            }
-          }
-          return Promise.all(topicPromiseArr).then((topicResponses) => {
-            return Promise.all(topicResponses.map(singleTopicResponse => singleTopicResponse.json()))
-          })
-        } else {
-          return [];
-        }
-      }).then((topicDataArray) => {
-        console.log('Got all the topic data...')
-        console.log(topicDataArray)
-        // return topicDataArray.forEach(topicData => resolveTopic(topicData))
-        const resultsData = topicDataArray.map(topicData => resolveTopic(topicData))
-        return resultsData;
-      }).then((nowOnTopicData) => {
-        console.log('Current "Now On" objects')
-        console.log(nowOnTopicData)
-        // component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
-        component.set('liveEvents', nowOnTopicData)
-        component.set('nextEvents', nowOnTopicData);
-      }).catch((e) => {
-        console.log('A "Now On" error occurred: ');
-        console.log(e);
-      });
-
+    // fetch(`/c/${nowOnId}.json${queryEnd}`)
+    //   .then((res) => {
+    //     return res.json();
+    //   }).then((data) => {
+    //     // console.log('Got results from now on...')
+    //     // console.log(data)
+    //     if (data && data.topic_list) {
+    //       const topics = data.topic_list.topics;
+    //       const topicArray = [];
+    //       const topicPromiseArr = [];
+    //       // for each topic (metadata) that is open in the topic_list get the actual topic text
+    //       for (let i = 0; i < topics.length; i += 1) {
+    //         // if the topic is open and isn't the default 'About the...' topic make a new request
+    //         if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
+    //           topicArray.push(topics[i]);
+    //           const p1 = fetch(`/t/${topics[i].id}.json${queryEnd}`);
+    //           topicPromiseArr.push(p1);
+    //         }
+    //       }
+    //       return Promise.all(topicPromiseArr).then((topicResponses) => {
+    //         return Promise.all(topicResponses.map(singleTopicResponse => singleTopicResponse.json()))
+    //       })
+    //     } else {
+    //       return [];
+    //     }
+    //   }).then((topicDataArray) => {
+    //     console.log('Got all the topic data...')
+    //     console.log(topicDataArray)
+    //     // return topicDataArray.forEach(topicData => resolveTopic(topicData))
+    //     const resultsData = topicDataArray.map(topicData => resolveTopic(topicData))
+    //     return resultsData;
+    //   }).then((nowOnTopicData) => {
+    //     console.log('Current "Now On" objects')
+    //     console.log(nowOnTopicData)
+    //     // component.set('liveEvents', [{ name: 'Test 1A' }, { name: 'Test 2A' }, { name: 'Test 3A' }]);
+    //     component.set('liveEvents', nowOnTopicData)
+    //     component.set('nextEvents', nowOnTopicData);
+    //   }).catch((e) => {
+    //     console.log('A "Now On" error occurred: ');
+    //     console.log(e);
+    //   });
+    updateLandingPage(component, nowOnId, 'liveEvents')
+    updateLandingPage(component, comingUpId, 'nextEvents')
     // Get the Coming up list and update the template 
     // ajax(`/c/${comingUpId}.json${queryEnd}`).then((res) => {
     //   console.log('blaaaa not important')
