@@ -70,7 +70,9 @@ function initializeClock(id, endtime) {
       daysSpan.nextElementSibling.innerHTML = "Day";
     } else if (dayValue == '00'){
       var div = document.querySelector("#clockdiv > div:nth-child(1)");
-      div.style.display = "none";
+      if (div) {      
+        div.style.display = "none";
+      }
     } else {
       daysSpan.nextElementSibling.innerHTML = "Days";
     }
@@ -147,8 +149,6 @@ function updateLandingPage(component, eventId, eventLabel) {
   .then((res) => {
     return res.json();
   }).then((data) => {
-    // console.log('Got results from now on...')
-    // console.log(data)
     if (data && data.topic_list) {
       const topics = data.topic_list.topics;
       const topicArray = [];
@@ -169,14 +169,10 @@ function updateLandingPage(component, eventId, eventLabel) {
       return [];
     }
   }).then((topicDataArray) => {
-    console.log(`Got all the topic data for ${eventId}...`)
-    console.log(topicDataArray)
     // return topicDataArray.forEach(topicData => resolveTopic(topicData))
     const resultsData = topicDataArray.map(topicData => resolveTopic(topicData))
     return resultsData;
   }).then((finalTopicData) => {
-    console.log(`Current ${eventId} objects`)
-    console.log(finalTopicData)
     component.set(eventLabel, finalTopicData)
   }).catch((e) => {
     console.log('A "updateLandingPage()" error occurred: ');
@@ -185,16 +181,9 @@ function updateLandingPage(component, eventId, eventLabel) {
 }
 
 function initializePlugin(api, component) {
-  console.log('Initializing...')
-  console.log(api)
-  console.log(component)
-  console.log('Finishing...')
   component.set('showLandingPage', true)
-  console.log('--------------------')
-
   // Show or hide the landing page based on current url
   api.onPageChange((url, title) => {
-    console.log('The page changed to: ' + url + ' and title ' + title)
     if (url == '/' || url == '/categories') {
       updateLandingPage(component, nowOnId, 'liveEvents')
       updateLandingPage(component, comingUpId, 'nextEvents')
