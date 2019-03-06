@@ -70,7 +70,9 @@ function initializeClock(id, endtime) {
       daysSpan.nextElementSibling.innerHTML = "Day";
     } else if (dayValue == '00'){
       var div = document.querySelector("#clockdiv > div:nth-child(1)");
-      div.style.display = "none";
+      if (div) {      
+        div.style.display = "none";
+      }
     } else {
       daysSpan.nextElementSibling.innerHTML = "Days";
     }
