@@ -200,7 +200,7 @@ function initializePlugin(api, component) {
       component.set('showLandingPage', true);
       let deadline = new Date(Date.UTC(year || 2019, month || 2, day || 7, hour || 8, minute || 0, second || 0));
       setTimeout(function() {
-        initializeClock('clockdiv', deadline)
+        initializeClock('clockdiv', deadline);
       }, 500);
     } else {
       component.set('showLandingPage', false);
