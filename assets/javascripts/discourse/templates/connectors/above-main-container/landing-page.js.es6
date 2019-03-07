@@ -6,6 +6,10 @@ const apiKey = '172d73af3122e6560fae33626f58130741877acfd1a9c8cfd9041a5ebc69fd9b
 const username = 'dturner';
 const queryEnd = `?api_key=${apiKey}&api_username=${username}`
 
+const apiKey1 = 'afea9cb58122c4ffc9d3d6bc7615cb51028d860c17c9d243bcf16a6dc9acfe75'
+const username1 = 'aoifebrady';
+const queryEnd1 = `?api_key=${apiKey1}&api_username=${username1}`
+
 const nowOnId = 12
 const comingUpId = 13
 
@@ -70,7 +74,7 @@ function initializeClock(id, endtime) {
       daysSpan.nextElementSibling.innerHTML = "Day";
     } else if (dayValue == '00'){
       var div = document.querySelector("#clockdiv > div:nth-child(1)");
-      if (div) {      
+      if (div && div != null) {      
         div.style.display = "none";
       }
     } else {
@@ -140,12 +144,12 @@ function resolveTopic(topicData) {
   return result;
 }
 
-function updateLandingPage(component, eventId, eventLabel) {
+function updateLandingPage(component, eventId, eventLabel, qEnd) {
   /*
     * every page change you should check if the 'Now on' and 'Coming up' topics have been updated
     */
   // Get the Now On list and update the template
-  fetch(`/c/${eventId}.json${queryEnd}`)
+  fetch(`/c/${eventId}.json${qEnd}`)
   .then((res) => {
     return res.json();
   }).then((data) => {
@@ -158,7 +162,7 @@ function updateLandingPage(component, eventId, eventLabel) {
         // if the topic is open and isn't the default 'About the...' topic make a new request
         if (!(topics[i].title.startsWith('About the')) && topics[i].closed === false) {
           topicArray.push(topics[i]);
-          const p1 = fetch(`/t/${topics[i].id}.json${queryEnd}`);
+          const p1 = fetch(`/t/${topics[i].id}.json${qEnd}`);
           topicPromiseArr.push(p1);
         }
       }
@@ -185,8 +189,8 @@ function initializePlugin(api, component) {
   // Show or hide the landing page based on current url
   api.onPageChange((url, title) => {
     if (url == '/' || url == '/categories') {
-      updateLandingPage(component, nowOnId, 'liveEvents')
-      updateLandingPage(component, comingUpId, 'nextEvents')
+      updateLandingPage(component, nowOnId, 'liveEvents', queryEnd)
+      updateLandingPage(component, comingUpId, 'nextEvents', queryEnd1)
       component.set('showLandingPage', true)
       let deadline = new Date(Date.UTC(year || 2019, month || 2, day || 7, hour || 8, minute || 0, second || 0));
       setTimeout(function() {
