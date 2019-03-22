@@ -1,0 +1,33 @@
+1. Create Droplet selecting Discourse from the digitalocean marketplace (not ubuntu)
+2. Go to AWS Simple Email Service
+  a. Verify new domain
+  b. Enter domain name copy all the keys and values down for each record 
+  c. These will be used for verifying emails are coming from our domain
+
+3. Go to the domain hosting provider and copy the records from AWS into the DNS settings (this differs for each provider and can take a few hours to update)
+
+
+Automation Script
+1. Update paths in nodeScript.sh to point to the correct places
+2. Update script for the new platform
+  a. Update the URL variable definition
+  b. Update the apiKey to be a newly created key generated on the platform (from an admin account)
+  c. Update the username to be the corresponding username that the key was generated for
+  d. Update the eventDate variable
+  e. Update the nowOnId; this is the id given to the private category for holding the 'Now On' topics
+  f. Update the comingUpId; this is the id given to the private category for holding the 'Coming Up' topics
+  g. Update the finishedId; this is the id given to the private category for finished topics
+  To find these IDs you can run:
+  curl http://www.imaginenuig.icu/categories.json?username={username}&apiKey={apiKey} | grep 'name'
+  and look for the matching IDs or you can browse to <URL>/categories.json when logged in as an admin and find the ids that way
+
+3. Install dependencies
+npm install node-fetch --save
+4. Add the script as a cronjob
+  a. sudo crontab -e
+  b. Add the following at the end to run the script every 15 minutes
+  */15 * * * * <FULL_PATH_TO_SCRIPT>/nodeScript.sh
+  c. Check the output to make sure nodejs is available from the cron manager and the script is working
+  d. If not use the full path for nodejs in nodeScript.sh and check the output again
+Notes: Since I was working in a different time zone it was important to explicitly set the Date object properly
+there is probably a cleaner way of doing it
